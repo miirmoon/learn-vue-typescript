@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "esnext",    // 컴파일 할 때 빌드 디렉토리에 생성되는 js 버전, esnext는 typescript가 지원하는 가장 높은 버전을 나타냄
+    "module": "esnext",    // 컴파일된 결과물이 사용할 모듈 방식
+    "strict": true,        // 타입 검사를 엄격하게 할 것인지 설정
+    "jsx": "preserve",     // tsx파일을 jsx로 어떻게 컴파일할 것인지 설정
+    "importHelpers": true, // 'tslib'에서 헬퍼를 가져올 지 여부 
+    "moduleResolution": "node",  // 컴파일러가 import가 무엇을 참조하는지 알아내기 위해 사용하는 프로세스
+    "skipLibCheck": true,        // 정의 파일의 타입 확인을 건너뛸지 여부
+    "esModuleInterop": true,     // 모든 import에 대한 namespace 생성을 통해 CommonJS와 ES Modules간의 상호 운용성이 생기게 할 지 여부
+    "allowSyntheticDefaultImports": true,  // default export가 아닌 모듈에서도 default import가 가능하게 할 지 여부, 타입 확인에만 영향
+    "sourceMap": true,     // *.js.map 또는 *.jsx.map 파일 포함 여부
+    "baseUrl": ".",        // non-absolute한 모듈 이름을 처리할 기준 디렉토리(절대경로로 사용할 수 있음)
+    "types": [             // 컴파일 중 포함될 타입 정의 파일 목록(배열 형태)
+      "webpack-env"
+    ],
+    "paths": {             // 'baseUrl'을 기준으로 불러올 모듈의 위치 재지정
+      "@/*": [             // 'src/' 경로를 @로 표현할 수 있도록 설정
+        "src/*"
+      ]
+    },
+    "lib": [               // js로 컴파일할 때 포함될 라이브러리 목록
+      "esnext",            // but, typescript가 인지하도록 하는 목적이기 때문에 runtime시 해당 기능이 추가되는 것은 아님
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [            // 프로그램에 포함할 파일 이름이나 패턴(배열 형태)
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [           // include에서 파일을 포함할 때 생략할 파일 이름이나 패턴(배열 형태)
+    "node_modules"
+  ]
+}
+
