@@ -1,4 +1,5 @@
-# vue-todo
+# 할 일 관리
+- 기능: 할 일 조회, 추가, 수정, 삭제
 
 ## Project setup
 ```
@@ -20,5 +21,3 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
