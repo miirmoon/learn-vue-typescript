@@ -16,6 +16,7 @@
             :key="index"
             :index="index"
             :todoItem="todoItem"
+            @toggle="toggleItemComplete"
             @remove="removeTodoItem"
           ></TodoListItem>
         </ul>
@@ -31,7 +32,7 @@ import TodoListItem from "./components/TodoListItem.vue";
 
 const STORAGE_KEY = "vue-todo-ts-v1";
 const storage = {
-  save(todoItems: any[]) {
+  save(todoItems: Todo[]) {
     const parsed = JSON.stringify(todoItems); // 직렬화
     localStorage.setItem(STORAGE_KEY, parsed);
   },
@@ -42,12 +43,17 @@ const storage = {
   },
 };
 
+export interface Todo {
+  title: string;
+  done: boolean;
+}
+
 export default defineComponent({
   components: { TodoInput, TodoListItem },
   data() {
     return {
       todoText: "",
-      todoItems: [] as any[],
+      todoItems: [] as Todo[],
     };
   },
   methods: {
@@ -56,7 +62,15 @@ export default defineComponent({
     },
     addTodoItem() {
       const value = this.todoText;
-      this.todoItems.push(value);
+      // const todo: Todo = {
+      //   title: value,
+      //   done: false,
+      // };
+      // this.todoItems.push(todo);
+      this.todoItems.push({
+        title: value,
+        done: false,
+      });
       storage.save(this.todoItems);
       // localStorage.setItem("", value);
       this.initTodoText();
@@ -69,6 +83,13 @@ export default defineComponent({
     },
     removeTodoItem(index: number) {
       this.todoItems.splice(index, 1);
+      storage.save(this.todoItems);
+    },
+    toggleItemComplete(todoItem: Todo, index: number) {
+      this.todoItems.splice(index, 1, {
+        ...todoItem,
+        done: !todoItem.done,
+      });
       storage.save(this.todoItems);
     },
   },
