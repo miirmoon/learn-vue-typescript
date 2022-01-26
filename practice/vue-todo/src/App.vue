@@ -36,9 +36,9 @@ const storage = {
     const parsed = JSON.stringify(todoItems); // 직렬화
     localStorage.setItem(STORAGE_KEY, parsed);
   },
-  fetch() {
+  fetch(): Todo[] {
     const todoItems = localStorage.getItem(STORAGE_KEY) || "[]";
-    const result = JSON.parse(todoItems);
+    const result: Todo[] = JSON.parse(todoItems);
     return result;
   },
 };
@@ -79,7 +79,16 @@ export default defineComponent({
       this.todoText = "";
     },
     fetchTodoItems() {
-      this.todoItems = storage.fetch();
+      // a와 b의 타입은 fetch의 return타입으로 추론이 가능하기 때문에 명시하지 않았음
+      this.todoItems = storage.fetch().sort((a, b) => {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
     },
     removeTodoItem(index: number) {
       this.todoItems.splice(index, 1);
